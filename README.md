@@ -1,10 +1,9 @@
-# flutter_demo
+# 02-bloc
 
-Flutter Demo Project.
+Flutter状态管理BLoC入门
 
-## List
+## 说明
 
-| No | Branch | Introduce |
-| --- | ----- | ----- |
-| 00 | `00-base` | 空项目模板 |
-| 01 | `01-screen_adapt` | 屏幕适配 |
+看了一些文章，尝试实现一个简单的counter示例，但没有入门。
+
+示例无法运行。

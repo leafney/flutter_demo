@@ -10,7 +10,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter Demo'),
       ),
       body: Center(
-        child: Text('Hello World'),
+        child: Text('data'),
       ),
     );
   }
