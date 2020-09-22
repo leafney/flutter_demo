@@ -1,5 +1,9 @@
-# flutter_demo
+# 03-provider
 
-Flutter Demo Project.
+Flutter状态管理Provider
 
-## List
+## 说明
+
+```
+provider: ^4.3.2+2
+```
