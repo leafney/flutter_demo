@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key key}) : super(key: key);
-
+class DemoFour extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter Demo'),
-      ),
-      body: Center(
-        child: Text('Hello World'),
-      ),
+      appBar: AppBar(title: Text('BottomAppBar Demo Four')),
+      body: Container(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
         icon: Icon(Icons.add),

@@ -1,30 +1,18 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key key}) : super(key: key);
-
+class DemoThree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter Demo'),
-      ),
-      body: Center(
-        child: Text('Hello World'),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
+      appBar: AppBar(title: Text('BottomAppBar Demo Three')),
+      body: Container(),
+      floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        icon: Icon(Icons.add),
-        label: Text('添加'),
+        child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: AutomaticNotchedShape(
-          RoundedRectangleBorder(),
-          StadiumBorder(side: BorderSide()), // 主要是这行代码
-        ),
-        notchMargin: 6,
-        color: Colors.blue,
+        color: Colors.lightBlue,
         child: Container(
           height: 60,
           child: Padding(
@@ -32,7 +20,7 @@ class MyHomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconButton(icon: Icon(Icons.home), onPressed: () {}),
+                IconButton(icon: Icon(Icons.subject), onPressed: () {}),
                 IconButton(icon: Icon(Icons.search), onPressed: () {}),
               ],
             ),

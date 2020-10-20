@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key key}) : super(key: key);
-
+class DemoFour2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter Demo'),
-      ),
-      body: Center(
-        child: Text('Hello World'),
-      ),
+      appBar: AppBar(title: Text('BottomAppBar Demo Four 2')),
+      body: Container(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
         icon: Icon(Icons.add),
         label: Text('添加'),
+        shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(10)), // 设置多边形形状
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         shape: AutomaticNotchedShape(
           RoundedRectangleBorder(),
-          StadiumBorder(side: BorderSide()), // 主要是这行代码
+          BeveledRectangleBorder(
+              borderRadius: BorderRadius.circular(10)), // 设置多边形形状
         ),
         notchMargin: 6,
         color: Colors.blue,
