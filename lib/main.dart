@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/bottom_sheet/sheet_one.dart';
+import 'package:flutter_demo/bottom_sheet/sheet_two.dart';
 import 'package:flutter_demo/home_page.dart';
 import 'package:flutter_demo/slide_panel/panel_one.dart';
 import 'package:flutter_demo/slide_panel/panel_two.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       // home: MyHomePage(),
       // home: PanelOne(),
       // home: PanelTwo(),
-      home: SheetOne(),
+      // home: SheetOne(),
+      home: SheetTwo(),
     );
   }
 }

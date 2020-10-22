@@ -1,6 +1,6 @@
 # flutter_demo
 
-Flutter Demo Project.
+底部弹层效果
 
 ## Demo List
 
@@ -114,7 +114,7 @@ sliding_up_panel: ^1.0.2
 modal_bottom_sheet: ^0.2.2
 ```
 
-引入失败，无法实现预期效果。
+引入失败，无法实现预期效果。待后期完善。
 
 #### Sheet One
 
@@ -131,3 +131,51 @@ modal_bottom_sheet: ^0.2.2
 ```
 
 ```
+
+---
+
+### snapping_sheet
+
+* https://pub.dev/packages/snapping_sheet
+* https://github.com/AdamJonsson/snapping_sheet
+
+```
+snapping_sheet: ^2.0.1
+```
+
+#### Sheet Two
+
+实现仿高德首页底部弹层滑动效果
+
+![](snapshot/demo_two.gif)
+
+
+插件实现效果：
+
+
+![](snapshot/sheet_two.gif)
+
+```
+    Scaffold(
+      appBar: AppBar(
+        title: Text('Sheet Two'),
+      ),
+      body: SnappingSheet(
+        child: Container(
+          color: Colors.yellow,
+        ),
+        sheetBelow: SnappingSheetContent(
+          child: Container(
+            color: Colors.red,
+          ),
+          heightBehavior: SnappingSheetHeight.fit(),
+        ),
+        grabbing: Container(
+          color: Colors.blue,
+        ),
+      ),
+    );
+```
+
+---
+
