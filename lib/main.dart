@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/home_page.dart';
+import 'package:flutter_demo/pages/navs/unknow_page.dart';
 import 'package:flutter_demo/routes/app_pages.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,9 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
       getPages: AppPages.pages, // 页面
-      defaultTransition: Transition.upToDown, // 默认页面切换方式
+      unknownRoute: GetPage(name: '/unknow', page: () => UnknowPage()), // 404页面
+      // defaultTransition: Transition.upToDown, // 默认页面切换方式
+      // themeMode: ThemeMode.system,
     );
   }
 }

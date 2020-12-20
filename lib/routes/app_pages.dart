@@ -1,6 +1,9 @@
 import 'package:flutter_demo/home_page.dart';
-import 'package:flutter_demo/pages/other/other_page.dart';
-import 'package:flutter_demo/pages/user/user_page.dart';
+import 'package:flutter_demo/pages/navs/nav_page.dart';
+import 'package:flutter_demo/pages/navs/other_page.dart';
+
+import 'package:flutter_demo/pages/navs/user_page.dart';
+import 'package:flutter_demo/pages/states/state_page.dart';
 import 'package:flutter_demo/routes/app_routes.dart';
 import 'package:get/route_manager.dart';
 
@@ -10,6 +13,10 @@ abstract class AppPages {
       name: AppRoutes.HOME,
       page: () => MyHomePage(),
       transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: AppRoutes.NAV,
+      page: () => NavPage(),
     ),
     GetPage(
       name: AppRoutes.OTHER,
@@ -24,6 +31,10 @@ abstract class AppPages {
     GetPage(
       name: '${AppRoutes.USER}/:name',
       page: () => UserPage(),
+    ),
+    GetPage(
+      name: AppRoutes.State,
+      page: () => StatePage(),
     ),
   ];
 }
