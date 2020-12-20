@@ -17,6 +17,9 @@ class MyHomePage extends StatelessWidget {
           CheatBtn(text: '路由示例', onPress: () => Get.toNamed(AppRoutes.NAV)),
           SizedBox(height: 20),
           CheatBtn(text: '状态管理', onPress: () => Get.toNamed(AppRoutes.State)),
+          SizedBox(height: 20),
+          CheatBtn(text: '主题切换', onPress: () => Get.toNamed(AppRoutes.THEME)),
+          SizedBox(height: 20),
         ],
       ),
     );

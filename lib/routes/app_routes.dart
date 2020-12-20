@@ -5,4 +5,5 @@ abstract class AppRoutes {
   static const OTHER = '/other';
   static const USER = '/user';
   static const State = '/state';
+  static const THEME='/theme';
 }

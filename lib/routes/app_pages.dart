@@ -4,6 +4,7 @@ import 'package:flutter_demo/pages/navs/other_page.dart';
 
 import 'package:flutter_demo/pages/navs/user_page.dart';
 import 'package:flutter_demo/pages/states/state_page.dart';
+import 'package:flutter_demo/pages/themes/theme_page.dart';
 import 'package:flutter_demo/routes/app_routes.dart';
 import 'package:get/route_manager.dart';
 
@@ -35,6 +36,10 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.State,
       page: () => StatePage(),
+    ),
+    GetPage(
+      name: AppRoutes.THEME,
+      page: () => ThemePage(),
     ),
   ];
 }
