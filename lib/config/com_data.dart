@@ -6,4 +6,6 @@ class ComData {
 
   /// 用户 refresh_token
   static const SPKEY_REFRESH_TOEKN = "refresh_token";
+
+  static const PHONE = '';
 }

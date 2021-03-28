@@ -1,7 +1,7 @@
 class HttpConfig {
   HttpConfig._();
 
-  static final httpBaseUrl = "";
+  static final httpBaseUrl = "http://172.21.40.40:9999";
   static const httpTimeOut = 5000;
 
   // api

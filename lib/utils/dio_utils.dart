@@ -40,7 +40,7 @@ class DioUtils {
   }
 
 // 不带access_token的请求
-  Future<Response> requestHttp(String url,
+  Future<Response?> requestHttp(String url,
       {String method = "get",
       Map<String, dynamic>? params,
       dynamic? data,
@@ -58,7 +58,7 @@ class DioUtils {
     // deviceId拦截器
     _addDeviceIdRequestInterceptor(_dio);
 
-    late Response response;
+    Response? response;
     try {
       response = await _dio
           .request(url,
@@ -87,7 +87,7 @@ class DioUtils {
   }
 
 // 带有access_token的请求
-  Future<Response> requestWithToken(String url,
+  Future<Response?> requestWithToken(String url,
       {String method = "get",
       Map<String, dynamic>? params,
       Map<String, dynamic>? data,
@@ -108,7 +108,7 @@ class DioUtils {
     // 添加自定义token拦截器
     _addTokenInterceptor(_dio);
 
-    late Response response;
+    Response? response;
     try {
       response = await _dio
           .request(url,
