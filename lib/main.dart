@@ -4,6 +4,8 @@ import 'package:flutter_demo/utils/sp_utils.dart';
 import 'package:oktoast/oktoast.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await SpUtils.getInstance();
   runApp(MyApp());
 }
