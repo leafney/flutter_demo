@@ -4,6 +4,12 @@ class HttpConfig {
   static final httpBaseUrl = "";
   static const httpTimeOut = 5000;
 
-  /// api
+  // api
+  static const apiCaptcha = '/captcha';
+
+  static const apiLogin = '/login';
+
   static const apiRefreshToken = '/refresh';
+
+  static const apiTest = '/api/v1/test';
 }
