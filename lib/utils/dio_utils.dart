@@ -63,6 +63,9 @@ class DioUtils {
     // 设置method
     _baseOptions.method = method;
 
+    // 异常响应拦截器
+    _addResponseErrorInterceptor(_dio);
+
     // 请求及返回数据拦截器
     _addResponseInterceptor(_dio);
 
@@ -71,15 +74,15 @@ class DioUtils {
 
     Response? response;
     try {
-      response = await _dio
-          .request(
-            url,
-            queryParameters: params,
-            options: options,
-            data: data,
-            cancelToken: cancelToken,
-          )
-          .catchError(_handleError); // 优化异常捕获
+      response = await _dio.request(
+        url,
+        queryParameters: params,
+        options: options,
+        data: data,
+        cancelToken: cancelToken,
+      );
+      // .catchError(_handleError); // 优化异常捕获
+
 //           .catchError((err) {
 // // 最终的解决方法：但凡是错误码非200的情况，dio都会在catchError中捕获异常，然后返回的response都是null。
 // // 所以，在catchError中处理非200的错误信息，弹窗提示。正常的200返回在下一层中去处理。
@@ -92,6 +95,7 @@ class DioUtils {
 //         // debugPrint('错误信息内容 ${err.response?.data}');
 //         // XToast.showCenter(eInfo);
       // });
+
     } on DioError catch (e) {
       // try catch 无法捕获dio的异常
       print('请求异常: $e');
@@ -114,6 +118,9 @@ class DioUtils {
     // 设置method
     _baseOptions.method = method;
 
+    // 异常响应拦截器
+    _addResponseErrorInterceptor(_dio);
+
     // 请求及返回数据拦截器
     _addResponseInterceptor(_dio);
 
@@ -125,18 +132,14 @@ class DioUtils {
 
     Response? response;
     try {
-      response = await _dio
-          .request(
-            url,
-            queryParameters: params,
-            options: options,
-            data: data,
-            cancelToken: cancelToken,
-          )
-          .catchError(_handleError); // 优化异常捕获
-      //     .catchError((err) {
-      //   debugPrint('请求异常123: $err');
-      // });
+      response = await _dio.request(
+        url,
+        queryParameters: params,
+        options: options,
+        data: data,
+        cancelToken: cancelToken,
+      );
+      //.catchError(_handleError); // 优化异常捕获
     } on DioError catch (e) {
       print('请求异常: $e');
     }
@@ -184,7 +187,7 @@ class DioUtils {
           // 更新请求头中的token
           options.headers['Authorization'] = 'Bearer $accToken';
         } else {
-          // 本地不存在token
+          // 本地不存在token， TODO 抛出异常
         }
       } else {
         print('have token,use it');
@@ -197,7 +200,7 @@ class DioUtils {
     }, onError: (DioError err, ErrorInterceptorHandler handler) {
       // 401代表token已过期，需在后台api定义相应错误码
       if (err.response?.statusCode == 401) {
-        print('后端返回token已过期的错误码，需要刷新token');
+        print('后端返回 access_token 已过期的错误码，需要刷新 access_token');
 
         RequestOptions options = err.response!.requestOptions;
 
@@ -354,6 +357,45 @@ class DioUtils {
     //     return handler.next(options);
     //   }),
     // );
+  }
+
+  _addResponseErrorInterceptor(Dio dio) {
+    dio.interceptors.add(InterceptorsWrapper(
+      onResponse: (e, handler) {
+        // 根据响应状态码判断响应结果
+        final rCode = e.statusCode!;
+
+        print('errData -- ${e.statusCode!} -- ${e.data}');
+
+        if (rCode == 200) {
+          print('正常响应');
+          // 正常响应
+          handler.next(e);
+        } else {
+          // 异常响应
+          print('异常响应');
+
+          if (rCode >= 400 && rCode < 500) {
+            // 客户端错误
+            showToast(e.data);
+          } else if (rCode >= 500) {
+            // 服务器错误
+            showToast('系统繁忙，请稍后重试');
+          } else {
+            // 其他
+          }
+          print('阻止后续请求');
+          // 阻止后续请求
+          handler.reject(
+            DioError(
+              requestOptions: e.requestOptions,
+              error: "status code 4xx",
+            ),
+            true,
+          );
+        }
+      },
+    ));
   }
 }
 
