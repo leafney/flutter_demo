@@ -16,6 +16,15 @@ import 'package:oktoast/oktoast.dart';
 // 用于缓存请求的token，定义为全局变量
 String? csrfToken;
 
+class Method {
+  static final String get = "GET";
+  static final String post = "POST";
+  static final String put = "PUT";
+  static final String head = "HEAD";
+  static final String delete = "DELETE";
+  static final String patch = "PATCH";
+}
+
 class DioUtils {
   static DioUtils? _instance;
   late Dio _dio;
@@ -265,18 +274,27 @@ class DioUtils {
 
 // 要来捕获dio的异常信息
   _handleError(dynamic err) {
-    Response? response = err?.response;
+    Response? response = err.response;
     if (response != null) {
       print('拦截器捕获*异常*返回结果：$response');
 
       if (response.statusCode! >= 400 && response.statusCode! < 500) {
+        dynamic errData = response.data;
+        print('errData -- ${errData.runtimeType} -- $errData');
         // 获取返回信息中的message并弹窗提示
-        var errMsg = response.data['message'] ?? "";
-        showToast(errMsg);
+        switch (errData.runtimeType) {
+          case Map:
+            var errMsg = errData['message'] ?? errData;
+            showToast(errMsg);
+            break;
+          default:
+            showToast(errData);
+        }
       } else if (response.statusCode! >= 500) {
         showToast('系统繁忙，请稍后重试');
       }
     }
+    return response;
   }
 
 // 请求及返回数据拦截器

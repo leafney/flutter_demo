@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/config/com_data.dart';
 import 'package:flutter_demo/config/http_config.dart';
 import 'package:flutter_demo/utils/dio_utils.dart';
+import 'package:oktoast/oktoast.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -16,6 +17,11 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            TextButton(
+                onPressed: () {
+                  showToast('哈哈哈哈');
+                },
+                child: Text('弹窗')),
             TextButton(
               onPressed: () async {
                 //
@@ -59,6 +65,7 @@ class MyHomePage extends StatelessWidget {
                 //
                 final response = await DioUtils()
                     .requestWithToken(HttpConfig.apiTest, method: 'POST');
+                print('response -- $response');
 
                 if (response != null) {
                   final rCode = response.data['code'];
