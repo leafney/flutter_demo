@@ -49,12 +49,14 @@ class DioUtils {
   }
 
 // 不带access_token的请求
-  Future<Response?> requestHttp(String url,
-      {String method = "get",
-      Map<String, dynamic>? params,
-      dynamic? data,
-      Options? options,
-      CancelToken? cancelToken}) async {
+  Future<Response?> requestHttp(
+    String url, {
+    String method = "get",
+    Map<String, dynamic>? params,
+    dynamic? data,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
     // 对url做trim处理，防止因为空格等问题出现请求失败
     url = url.trim();
 
@@ -70,11 +72,13 @@ class DioUtils {
     Response? response;
     try {
       response = await _dio
-          .request(url,
-              queryParameters: params,
-              options: options,
-              data: data,
-              cancelToken: cancelToken)
+          .request(
+            url,
+            queryParameters: params,
+            options: options,
+            data: data,
+            cancelToken: cancelToken,
+          )
           .catchError(_handleError); // 优化异常捕获
 //           .catchError((err) {
 // // 最终的解决方法：但凡是错误码非200的情况，dio都会在catchError中捕获异常，然后返回的response都是null。
@@ -96,12 +100,14 @@ class DioUtils {
   }
 
 // 带有access_token的请求
-  Future<Response?> requestWithToken(String url,
-      {String method = "get",
-      Map<String, dynamic>? params,
-      Map<String, dynamic>? data,
-      Options? options,
-      CancelToken? cancelToken}) async {
+  Future<Response?> requestWithToken(
+    String url, {
+    String method = "get",
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? data,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
     // 对url做trim处理，防止因为空格等问题出现请求失败
     url = url.trim();
 
@@ -120,11 +126,13 @@ class DioUtils {
     Response? response;
     try {
       response = await _dio
-          .request(url,
-              queryParameters: params,
-              options: options,
-              data: data,
-              cancelToken: cancelToken)
+          .request(
+            url,
+            queryParameters: params,
+            options: options,
+            data: data,
+            cancelToken: cancelToken,
+          )
           .catchError(_handleError); // 优化异常捕获
       //     .catchError((err) {
       //   debugPrint('请求异常123: $err');
@@ -133,6 +141,28 @@ class DioUtils {
       print('请求异常: $e');
     }
     return response;
+  }
+
+  /// 下载
+  Future<Response> download(
+    String url, {
+    required String savePath,
+    Map<String, dynamic>? data,
+    Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onProgress,
+  }) async {
+    // 对url做trim处理，防止因为空格等问题出现请求失败
+    url = url.trim();
+
+    return _dio.download(
+      url,
+      savePath,
+      onReceiveProgress: onProgress,
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
   }
 
   // Token interceptor
