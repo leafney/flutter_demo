@@ -138,7 +138,7 @@ class DioUtils {
       // 获取当前的Access_Token
       if (csrfToken == null) {
         print('no token,get token first');
-        String accToken = SpUtils.getString(ComData.SPKEY_ACCESS_TOKEN);
+        String accToken = SpUtils.getString(ComData.SPKEY_ACCESS_TOKEN)!;
         print('从本地获取到token: $accToken');
         if (accToken.isNotEmpty) {
           csrfToken = accToken;
@@ -187,7 +187,7 @@ class DioUtils {
         dio.interceptors.responseLock.lock();
         dio.interceptors.errorLock.lock();
 
-        String refreshToken = SpUtils.getString(ComData.SPKEY_REFRESH_TOEKN);
+        String refreshToken = SpUtils.getString(ComData.SPKEY_REFRESH_TOEKN)!;
         print('从本地获取refreshToken: $refreshToken');
         // TODO token的刷新是没有携带device_Id信息的，后期再修改
         tokenDio.post(HttpConfig.apiRefreshToken, data: {
