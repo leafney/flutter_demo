@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/home_page.dart';
+import 'package:flutter_demo/utils/sp_utils.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SpUtils.getInstance();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
