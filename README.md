@@ -2,4 +2,10 @@
 
 Flutter Demo Project.
 
-## List
+## Dio
+
+```
+dio: ^3.0.10
+```
+
+测试 `dio` 的使用。

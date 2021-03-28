@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/home_page.dart';
+import 'package:flutter_demo/utils/sp_utils.dart';
+import 'package:oktoast/oktoast.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  await SpUtils.getInstance();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return OKToast(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(),
       ),
-      home: MyHomePage(),
     );
   }
 }
