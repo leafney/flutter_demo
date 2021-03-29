@@ -13,7 +13,7 @@ import 'package:flutter_demo/config/http_config.dart';
 import 'package:flutter_demo/utils/sp_utils.dart';
 import 'package:oktoast/oktoast.dart';
 
-// 用于缓存请求的token，定义为全局变量
+// 用于缓存请求的token，定义为全局变量，让多个请求共用
 String? csrfToken;
 
 class Method {
@@ -29,6 +29,7 @@ class DioUtils {
   static DioUtils? _instance;
   late Dio _dio;
   late BaseOptions _baseOptions;
+  CancelToken _cancelToken = CancelToken();
 
   static DioUtils getInstance() {
     if (_instance == null) {
@@ -62,6 +63,9 @@ class DioUtils {
 
     // 设置method
     _baseOptions.method = method;
+
+    // 异常拦截器
+    _dio.interceptors.add(ErrorInterceptor());
 
     // 异常响应拦截器
     _addResponseErrorInterceptor(_dio);
@@ -118,6 +122,12 @@ class DioUtils {
     // 设置method
     _baseOptions.method = method;
 
+    // 取消请求
+    // _cancelToken.cancel('cancelled');
+
+    // 异常拦截器
+    _dio.interceptors.add(ErrorInterceptor());
+
     // 异常响应拦截器
     _addResponseErrorInterceptor(_dio);
 
@@ -132,13 +142,19 @@ class DioUtils {
 
     Response? response;
     try {
-      response = await _dio.request(
+      response = await _dio
+          .request(
         url,
         queryParameters: params,
         options: options,
         data: data,
-        cancelToken: cancelToken,
-      );
+        cancelToken: cancelToken ?? _cancelToken,
+      )
+          .catchError((e) {
+        if (CancelToken.isCancel(e)) {
+          print('catchError is cancel-- $e');
+        }
+      });
       //.catchError(_handleError); // 优化异常捕获
     } on DioError catch (e) {
       print('请求异常: $e');
@@ -361,41 +377,42 @@ class DioUtils {
 
   _addResponseErrorInterceptor(Dio dio) {
     dio.interceptors.add(InterceptorsWrapper(
-      onResponse: (e, handler) {
-        // 根据响应状态码判断响应结果
-        final rCode = e.statusCode!;
+        // onResponse: (e, handler) {
+        //   // 根据响应状态码判断响应结果
+        //   final rCode = e.statusCode!;
 
-        print('errData -- ${e.statusCode!} -- ${e.data}');
+        //   print('errData -- ${e.statusCode!} -- ${e.data}');
 
-        if (rCode == 200) {
-          print('正常响应');
-          // 正常响应
-          handler.next(e);
-        } else {
-          // 异常响应
-          print('异常响应');
+        //   if (rCode == 200) {
+        //     print('正常响应');
+        //     // 正常响应
+        //     handler.next(e);
+        //   } else {
+        //     // 异常响应
+        //     print('异常响应');
 
-          if (rCode >= 400 && rCode < 500) {
-            // 客户端错误
-            showToast(e.data);
-          } else if (rCode >= 500) {
-            // 服务器错误
-            showToast('系统繁忙，请稍后重试');
-          } else {
-            // 其他
-          }
-          print('阻止后续请求');
-          // 阻止后续请求
-          handler.reject(
-            DioError(
-              requestOptions: e.requestOptions,
-              error: "status code 4xx",
-            ),
-            true,
-          );
-        }
-      },
-    ));
+        //     if (rCode >= 400 && rCode < 500) {
+        //       // 客户端错误
+        //       showToast(e.data);
+        //     } else if (rCode >= 500) {
+        //       // 服务器错误
+        //       showToast('系统繁忙，请稍后重试');
+        //     } else {
+        //       // 其他
+        //     }
+        //     print('阻止后续请求');
+        //     // 阻止后续请求
+        //     handler.reject(
+        //       DioError(
+        //         requestOptions: e.requestOptions,
+        //         error: "status code 4xx",
+        //       ),
+        //       true,
+        //     );
+        //   }
+        // },
+
+        ));
   }
 }
 
@@ -406,3 +423,20 @@ class DioUtils {
 3. 【待处理】 -- 请求时弹出加载中弹窗
 
 */
+
+// 一种新的添加方法
+class ErrorInterceptor extends Interceptor {
+  @override
+  void onError(DioError err, ErrorInterceptorHandler handler) {
+    //
+
+    // 根据响应状态码判断响应结果
+    final rCode = err.response?.statusCode;
+
+    print('ErrorInterceptor -- $err -- ${err.response?.data} -- $rCode');
+
+    super.onError(err, handler);
+
+    // handler.reject(err);
+  }
+}
